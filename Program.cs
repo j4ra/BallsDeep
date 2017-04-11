@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BallsDeep
 {
     class Program
     {
-        const double epsilon0 = 8.854187817e-12;
+        const double epsilon0 = 8.854187817620e-12;
         const double pi = Math.PI;
+        
 
-        const double precision = 1e-20;
+        const double precision = double.Epsilon;
         const int N = 250;
 
         static Ball[] balls = new Ball[2];
@@ -42,8 +39,8 @@ namespace BallsDeep
             Console.WriteLine("Sčítám...");
             Q = sum();
             Koule();
-            Console.WriteLine("Celkový Q: " + Q);
-            Console.WriteLine("Celkový U: " + U);
+            Console.WriteLine("Celkový Q: {0:R}", Q);
+            Console.WriteLine("Celkový U: {0:R}", U);
             Console.ReadLine();
         }
 
@@ -75,10 +72,12 @@ namespace BallsDeep
                 next(balls[1].a, balls[0].q[i - 1], Math.Abs(distance - balls[0].d[i - 1]), out Q, out D);
                 balls[1].q[i] = Q;
                 balls[1].d[i] = distance - D;
-                if(i < 5)
+                if(i < 6)
                 {
-                    Console.WriteLine("Q" + i + " = " + balls[0].q[i]);
-                    Console.WriteLine("Q'" + i + " = " + balls[1].q[i]);
+                    Console.WriteLine("\nQ" + i + " = " + balls[0].q[i]);
+                    Console.WriteLine("Q" + i + "' = " + balls[1].q[i]);
+                    Console.WriteLine("D" + i + " = " + balls[0].d[i]);
+                    Console.WriteLine("D" + i + "' = " + balls[1].d[i]);
                 }
             }
         }
@@ -102,10 +101,10 @@ namespace BallsDeep
 
         static void Koule()
         {
-            double V1 = 4.0 / 3.0 * pi * balls[0].a*balls[0].a*balls[0].a;
-            double V2 = 4.0 / 3.0 * pi * balls[1].a*balls[1].a*balls[1].a;
+            double V1 = balls[0].a*balls[0].a*balls[0].a;
+            double V2 =  balls[1].a*balls[1].a*balls[1].a;
             double V = V1 + V2;
-            A = Math.Pow(3.0/4.0/pi*V, 1.0/3.0);
+            A = Math.Pow(V, 1.0/3.0);
             U = 1.0 / 4.0 / pi / epsilon0 * Q / A;
         }
     }
