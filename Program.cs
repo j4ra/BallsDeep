@@ -85,10 +85,14 @@ namespace BallsDeep
         static double sum()
         {
             double sum = 0;
+            double Q1 = 0;
+            double Q2 = 0;
             double pre_sum = 0;
             for (int i = 0; i < N; i++)
             {
                 sum += balls[0].q[i] + balls[1].q[i];
+                Q1 += balls[0].q[i];
+                Q2 += balls[1].q[i];
                 if(i >= 50 && Math.Abs(sum - pre_sum) <= precision)
                 {
                     Console.WriteLine("Precision reached!");
@@ -96,6 +100,8 @@ namespace BallsDeep
                 }
                 pre_sum = sum;
             }
+            Console.WriteLine("Celkovy naboj prvni koule: " + Q1);
+            Console.WriteLine("Celkovy naboj druhe koule: " + Q2);
             return sum;
         }
 
